@@ -2,7 +2,9 @@
 import { Thermometer, Droplets, Wind, Sun } from 'lucide-react';
 import StatCard from './StatCard';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { IoLeafOutline} from "react-icons/io5";// untuk import dia punya icon
 
+const tanggal = new Date();
 const mockChartData = [
   { time: '00:00', temp: 24, humidity: 65 },
   { time: '04:00', temp: 23, humidity: 68 },
@@ -17,10 +19,15 @@ export default function DashboardOverview() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-slate-100 tracking-tight">Environment Overview</h2>
+        <div className="flex items-center gap-1"><IoLeafOutline size={28} color="#00cfff" />
+          <h1 className="text-2xl font-bold text-slate-100 tracking-tight">MIKROLIMAT</h1>
+        </div>
           <p className="text-slate-400 mt-1">Real-time mikroklimat monitoring data</p>
         </div>
         <div className="flex items-center gap-2">
+          <p><span>{tanggal.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span></p>
+          <p>|</p>
+          <p><span>{tanggal.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</span></p>
           <span className="relative flex h-3 w-3">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-teal-500"></span>
@@ -63,7 +70,7 @@ export default function DashboardOverview() {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         <div className="col-span-1 lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <h3 className="text-lg font-semibold text-slate-100 mb-6">Temperature & Humidity Trends</h3>
           <div className="h-72">
@@ -92,23 +99,7 @@ export default function DashboardOverview() {
             </ResponsiveContainer>
           </div>
         </div>
-
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-          <h3 className="text-lg font-semibold text-slate-100 mb-6">System Status</h3>
-          <div className="space-y-4">
-            {['Sensor Node 1 (Greenhouse)', 'Sensor Node 2 (Outdoor)', 'Data Logger', 'Network Gateway'].map((device, i) => (
-              <div key={i} className="flex items-center justify-between p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
-                <div className="flex items-center gap-3">
-                  <div className={`w-2 h-2 rounded-full ${i === 2 ? 'bg-amber-400' : 'bg-emerald-400'}`}></div>
-                  <span className="text-sm font-medium text-slate-200">{device}</span>
-                </div>
-                <span className={`text-xs font-semibold px-2 py-1 rounded-md ${i === 2 ? 'bg-amber-400/10 text-amber-400' : 'bg-emerald-400/10 text-emerald-400'}`}>
-                  {i === 2 ? 'Syncing' : 'Online'}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+        
       </div>
     </div>
   );
