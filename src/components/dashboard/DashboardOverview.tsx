@@ -1,20 +1,34 @@
 import { useState, useEffect } from 'react';
 import { Thermometer, Droplets, Wind, Sun } from 'lucide-react';
 import StatCard from './StatCard';
-import { getSensorData } from '../../service/api';
+import SoilCard from './SoilCard';
+import { getSensorData, getSoilSensorData } from '../../service/api';
+
 // import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 type SensorData = { temperature: number | null; humidity: number | null };
+type SoilData = {
+  soilSensor1: number | null;
+  soilSensor2: number | null;
+  kondisiTanah: 'Kering' | 'Lembab' | 'Basah' | null;
+};
 
 export default function DashboardOverview() {
   const [sensorData, setSensorData] = useState<SensorData>({ temperature: null, humidity: null });
+  const [soilData, setSoilData] = useState<SoilData>({ soilSensor1: null, soilSensor2: null, kondisiTanah: null });
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getSensorData();
-        setSensorData(data);
+        
+        const [envData, newSoilData] = await Promise.all([
+          getSensorData(),
+          getSoilSensorData(),
+        ]);
+
+        setSensorData(envData);
+        setSoilData(newSoilData);
         setError(null); 
       } catch (err) {
         if (err instanceof Error) {
@@ -53,6 +67,13 @@ export default function DashboardOverview() {
         </div>
       )}
 
+      <div className="grid grid-cols-1 gap-6 mb-6"> 
+        <SoilCard 
+          sensor1Moisture={soilData.soilSensor1} 
+          sensor2Moisture={soilData.soilSensor2} 
+          soilCondition={soilData.kondisiTanah} 
+        />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         <StatCard 
           title="Temperature" 
