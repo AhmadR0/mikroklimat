@@ -1,16 +1,16 @@
 // import React from 'react';
 import { Thermometer, Droplets, Wind, Sun } from 'lucide-react';
 import StatCard from './StatCard';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+// import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-const mockChartData = [
-  { time: '00:00', temp: 24, humidity: 65 },
-  { time: '04:00', temp: 23, humidity: 68 },
-  { time: '08:00', temp: 26, humidity: 60 },
-  { time: '12:00', temp: 31, humidity: 50 },
-  { time: '16:00', temp: 29, humidity: 55 },
-  { time: '20:00', temp: 25, humidity: 62 },
-];
+// const mockChartData = [
+//   { time: '00:00', temp: 24, humidity: 65 },
+//   { time: '04:00', temp: 23, humidity: 68 },
+//   { time: '08:00', temp: 26, humidity: 60 },
+//   { time: '12:00', temp: 31, humidity: 50 },
+//   { time: '16:00', temp: 29, humidity: 55 },
+//   { time: '20:00', temp: 25, humidity: 62 },
+// ];
 
 export default function DashboardOverview() {
   return (
@@ -29,7 +29,7 @@ export default function DashboardOverview() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         <StatCard 
           title="Temperature" 
           value="26.4" 
@@ -63,7 +63,7 @@ export default function DashboardOverview() {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="col-span-1 lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <h3 className="text-lg font-semibold text-slate-100 mb-6">Temperature & Humidity Trends</h3>
           <div className="h-72">
@@ -109,7 +109,7 @@ export default function DashboardOverview() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
