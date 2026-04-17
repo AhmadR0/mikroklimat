@@ -1,18 +1,35 @@
-// import React from 'react';
+import { useState, useEffect } from 'react';
 import { Thermometer, Droplets, Wind, Sun } from 'lucide-react';
 import StatCard from './StatCard';
+import { getSensorData } from '../../service/api';
 // import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-// const mockChartData = [
-//   { time: '00:00', temp: 24, humidity: 65 },
-//   { time: '04:00', temp: 23, humidity: 68 },
-//   { time: '08:00', temp: 26, humidity: 60 },
-//   { time: '12:00', temp: 31, humidity: 50 },
-//   { time: '16:00', temp: 29, humidity: 55 },
-//   { time: '20:00', temp: 25, humidity: 62 },
-// ];
+type SensorData = { temperature: number | null; humidity: number | null };
 
 export default function DashboardOverview() {
+  const [sensorData, setSensorData] = useState<SensorData>({ temperature: null, humidity: null });
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getSensorData();
+        setSensorData(data);
+        setError(null); 
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred.");
+        }
+      }
+    };
+
+    fetchData(); 
+    const intervalId = setInterval(fetchData, 3000); 
+    return () => clearInterval(intervalId);
+  }, []); 
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -29,21 +46,26 @@ export default function DashboardOverview() {
         </div>
       </div>
 
+      {error && (
+        <div className="bg-rose-500/10 border border-rose-500/30 text-rose-400 p-4 rounded-lg">
+          <p className="font-bold">Gagal terhubung ke sensor!</p>
+          <p className="text-sm mt-1">{error}</p>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         <StatCard 
           title="Temperature" 
-          value="26.4" 
+          value={sensorData.temperature?.toFixed(2) ?? '--'} 
           unit="°C" 
           icon={Thermometer} 
-          trend={{ value: 1.2, isPositive: true }}
           colorClass="text-rose-400 bg-rose-400"
         />
         <StatCard 
           title="Humidity" 
-          value="62" 
+          value={sensorData.humidity?.toFixed(2) ?? '--'} 
           unit="%" 
           icon={Droplets} 
-          trend={{ value: 0.5, isPositive: false }}
           colorClass="text-blue-400 bg-blue-400"
         />
         <StatCard 
