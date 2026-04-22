@@ -4,6 +4,7 @@ import { LucideIcon } from 'lucide-react';
 interface StatCardProps {
   title: string;
   value: string;
+  subtitle?: string | null;
   unit?: string;
   icon: LucideIcon;
   trend?: {
@@ -13,7 +14,7 @@ interface StatCardProps {
   colorClass: string;
 }
 
-export default function StatCard({ title, value, unit, icon: Icon, trend, colorClass }: StatCardProps) {
+export default function StatCard({ title, value, subtitle, unit, icon: Icon, trend, colorClass }: StatCardProps) {
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 transition-all hover:border-slate-700 hover:shadow-lg hover:shadow-slate-900/50">
       <div className="flex items-center justify-between mb-4">
@@ -23,9 +24,14 @@ export default function StatCard({ title, value, unit, icon: Icon, trend, colorC
         </div>
       </div>
       
-      <div className="flex items-baseline gap-2">
-        <span className="text-3xl font-bold text-slate-50 tracking-tight">{value}</span>
-        {unit && <span className="text-slate-400 font-medium">{unit}</span>}
+      <div>
+        <div className="flex items-baseline gap-2">
+          <span className="text-3xl font-bold text-slate-50 tracking-tight">{value}</span>
+          {unit && <span className="text-slate-400 font-medium">{unit}</span>}
+        </div>
+        <div className="h-6 mt-1 flex items-center"> {/* Reserve space to prevent layout shift */}
+          {subtitle && <span className="text-slate-400 font-medium">{subtitle}</span>}
+        </div>
       </div>
       
       {trend && (

@@ -12,11 +12,31 @@ export const getSensorData = async () => {
     return await res.json();
 }
 
+export const getLightSensorData = async () => {
+    const res = await fetch(`${BASE_API}/api/sensorlux`);
+
+    if (!res.ok) {
+        throw new Error(`Gagal mengambil data sensor cahaya. Status: ${res.status}. Pastikan ESP32 menyala dan terhubung ke jaringan yang sama.`);
+    }
+
+    return await res.json();
+}
+
 export const getSoilSensorData = async () => {
     const res = await fetch(`${BASE_API}/api/sensorSoil`);
 
     if (!res.ok) {
         throw new Error(`Gagal mengambil data sensor tanah. Status: ${res.status}. Pastikan ESP32 menyala dan terhubung ke jaringan yang sama.`);
+    }
+
+    return await res.json();
+}
+
+export const getRainSensorData = async () => {
+    const res = await fetch(`${BASE_API}/api/sensorHujan`);
+
+    if (!res.ok) {
+        throw new Error(`Gagal mengambil data sensor hujan. Status: ${res.status}. Pastikan ESP32 menyala dan terhubung ke jaringan yang sama.`);
     }
 
     return await res.json();

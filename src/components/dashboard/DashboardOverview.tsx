@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Thermometer, Droplets, Wind, Sun } from 'lucide-react';
+import { Thermometer, Droplets, CloudRainWind, Sun } from 'lucide-react';
 import StatCard from './StatCard';
 import SoilCard from './SoilCard';
-import { getSensorData, getSoilSensorData } from '../../service/api';
+import { getSensorData, getSoilSensorData, getLightSensorData, getRainSensorData } from '../../service/api';
 
 // import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -12,23 +12,34 @@ type SoilData = {
   soilSensor2: number | null;
   kondisiTanah: 'Kering' | 'Lembab' | 'Basah' | null;
 };
+type LightData = { luxValue: number | null };
+type RainData = {
+  intensitasCuraHujan: number | null;
+  kondisiHujan: string | null;
+};
 
 export default function DashboardOverview() {
   const [sensorData, setSensorData] = useState<SensorData>({ temperature: null, humidity: null });
   const [soilData, setSoilData] = useState<SoilData>({ soilSensor1: null, soilSensor2: null, kondisiTanah: null });
+  const [lightData, setLightData] = useState<LightData>({ luxValue: null });
+  const [rainData, setRainData] = useState<RainData>({ intensitasCuraHujan: null, kondisiHujan: null });
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         
-        const [envData, newSoilData] = await Promise.all([
+        const [envData, newSoilData, newLightData, newRainData] = await Promise.all([
           getSensorData(),
           getSoilSensorData(),
+          getLightSensorData(),
+          getRainSensorData(),
         ]);
 
         setSensorData(envData);
         setSoilData(newSoilData);
+        setLightData(newLightData);
+        setRainData(newRainData);
         setError(null); 
       } catch (err) {
         if (err instanceof Error) {
@@ -76,30 +87,30 @@ export default function DashboardOverview() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         <StatCard 
-          title="Temperature" 
+          title="Temperatur" 
           value={sensorData.temperature?.toFixed(2) ?? '--'} 
           unit="°C" 
           icon={Thermometer} 
           colorClass="text-rose-400 bg-rose-400"
         />
         <StatCard 
-          title="Humidity" 
+          title="Kelembaban" 
           value={sensorData.humidity?.toFixed(2) ?? '--'} 
           unit="%" 
           icon={Droplets} 
           colorClass="text-blue-400 bg-blue-400"
         />
         <StatCard 
-          title="Wind Speed" 
-          value="12.5" 
-          unit="km/h" 
-          icon={Wind} 
-          trend={{ value: 2.1, isPositive: true }}
-          colorClass="text-teal-400 bg-teal-400"
+          title="Curah Hujan" 
+          value={rainData.intensitasCuraHujan?.toFixed(2) ?? '--'} 
+          subtitle={rainData.kondisiHujan}
+          unit="mm/h" 
+          icon={CloudRainWind} 
+          colorClass="text-cyan-400 bg-cyan-400"
         />
         <StatCard 
-          title="Light Level" 
-          value="850" 
+          title="Intensitas Cahaya" 
+          value={lightData.luxValue?.toFixed(0) ?? '--'} 
           unit="lux" 
           icon={Sun} 
           colorClass="text-amber-400 bg-amber-400"
