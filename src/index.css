@@ -5,6 +5,6 @@
 @layer base {
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
   body {
-    @apply bg-blue-600 text-slate-50 antialiased;
+    @apply bg-yellow-400 text-zinc-950 antialiased;
   }
 }

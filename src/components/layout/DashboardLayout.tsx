@@ -8,7 +8,7 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div className="flex h-screen bg-slate-950 overflow-hidden text-slate-50 selection:bg-teal-500/30">
+    <div className="flex h-screen bg-yellow-400 overflow-hidden text-black selection:bg-black selection:text-yellow-400">
       {/* <div className="hidden lg:block">
         <Sidebar />
       </div> */}

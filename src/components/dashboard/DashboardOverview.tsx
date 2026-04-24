@@ -59,15 +59,15 @@ export default function DashboardOverview() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-slate-100 tracking-tight">Environment Overview</h2>
-          <p className="text-slate-400 mt-1">Real-time mikroklimat monitoring data</p>
+          <h2 className="text-3xl font-extrabold text-black/90 tracking-tight drop-shadow-sm">Gambaran Lingkungan</h2>
+          <p className="text-black/60 font-semibold mt-1">Data pemantauan mikroklimat waktu-nyata</p>
         </div>
         <div className="flex items-center gap-2">
           <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-teal-500"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
           </span>
-          <span className="text-sm font-medium text-teal-400">Live</span>
+          <span className="text-sm font-medium text-amber-400">Langsung</span>
         </div>
       </div>
 
@@ -91,14 +91,14 @@ export default function DashboardOverview() {
           value={sensorData.temperature?.toFixed(2) ?? '--'} 
           unit="°C" 
           icon={Thermometer} 
-          colorClass="text-rose-400 bg-rose-400"
+          colorClass="text-orange-400 bg-orange-400"
         />
         <StatCard 
           title="Kelembaban" 
           value={sensorData.humidity?.toFixed(2) ?? '--'} 
           unit="%" 
           icon={Droplets} 
-          colorClass="text-blue-400 bg-blue-400"
+          colorClass="text-yellow-400 bg-yellow-400"
         />
         <StatCard 
           title="Curah Hujan" 
@@ -106,20 +106,22 @@ export default function DashboardOverview() {
           subtitle={rainData.kondisiHujan}
           unit="mm/h" 
           icon={CloudRainWind} 
-          colorClass="text-cyan-400 bg-cyan-400"
+          colorClass="text-amber-500 bg-amber-500"
         />
         <StatCard 
           title="Intensitas Cahaya" 
           value={lightData.luxValue?.toFixed(0) ?? '--'} 
           unit="lux" 
           icon={Sun} 
-          colorClass="text-amber-400 bg-amber-400"
+          colorClass="text-yellow-300 bg-yellow-300"
         />
       </div>
 
       {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="col-span-1 lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <h3 className="text-lg font-semibold text-slate-100 mb-6">Temperature & Humidity Trends</h3>
+          <h3 className="text-lg font-semibold text-slate-100 mb-6">Tren Temperatur & Kelembaban</h3>
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={mockChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -127,10 +129,14 @@ export default function DashboardOverview() {
                   <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#fb7185" stopOpacity={0.3} />
                     <stop offset="95%" stopColor="#fb7185" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#fb923c" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#fb923c" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="colorHum" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#60a5fa" stopOpacity={0.3} />
                     <stop offset="95%" stopColor="#60a5fa" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#facc15" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#facc15" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
@@ -142,6 +148,8 @@ export default function DashboardOverview() {
                 />
                 <Area type="monotone" dataKey="temp" stroke="#fb7185" strokeWidth={3} fillOpacity={1} fill="url(#colorTemp)" />
                 <Area type="monotone" dataKey="humidity" stroke="#60a5fa" strokeWidth={3} fillOpacity={1} fill="url(#colorHum)" />
+                <Area type="monotone" dataKey="temp" stroke="#fb923c" strokeWidth={3} fillOpacity={1} fill="url(#colorTemp)" />
+                <Area type="monotone" dataKey="humidity" stroke="#facc15" strokeWidth={3} fillOpacity={1} fill="url(#colorHum)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -149,21 +157,27 @@ export default function DashboardOverview() {
 
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <h3 className="text-lg font-semibold text-slate-100 mb-6">System Status</h3>
+          <h3 className="text-lg font-semibold text-slate-100 mb-6">Status Sistem</h3>
           <div className="space-y-4">
             {['Sensor Node 1 (Greenhouse)', 'Sensor Node 2 (Outdoor)', 'Data Logger', 'Network Gateway'].map((device, i) => (
+            {['Node Sensor 1 (Rumah Kaca)', 'Node Sensor 2 (Luar Ruangan)', 'Pencatat Data', 'Gerbang Jaringan'].map((device, i) => (
               <div key={i} className="flex items-center justify-between p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
                 <div className="flex items-center gap-3">
                   <div className={`w-2 h-2 rounded-full ${i === 2 ? 'bg-amber-400' : 'bg-emerald-400'}`}></div>
+                  <div className={`w-2 h-2 rounded-full ${i === 2 ? 'bg-amber-400' : 'bg-yellow-500'}`}></div>
                   <span className="text-sm font-medium text-slate-200">{device}</span>
                 </div>
                 <span className={`text-xs font-semibold px-2 py-1 rounded-md ${i === 2 ? 'bg-amber-400/10 text-amber-400' : 'bg-emerald-400/10 text-emerald-400'}`}>
                   {i === 2 ? 'Syncing' : 'Online'}
+                <span className={`text-xs font-semibold px-2 py-1 rounded-md ${i === 2 ? 'bg-amber-400/10 text-amber-400' : 'bg-yellow-500/10 text-yellow-500'}`}>
+                  {i === 2 ? 'Sinkronisasi' : 'Daring'}
                 </span>
               </div>
             ))}
           </div>
         </div>
       </div> */}
-    </div>
+      </div>
+    // </div>
   );
 }
