@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Thermometer, Droplets, CloudRainWind, Sun } from 'lucide-react';
+import { Thermometer, Droplets, CloudRainWind, Sun, AlertTriangle } from 'lucide-react';
 import StatCard from './StatCard';
 import SoilCard from './SoilCard';
 import { getSensorData, getSoilSensorData, getLightSensorData, getRainSensorData } from '../../service/api';
@@ -45,7 +45,7 @@ export default function DashboardOverview() {
         if (err instanceof Error) {
           setError(err.message);
         } else {
-          setError("An unknown error occurred.");
+          setError("Terjadi kesalahan sistem.");
         }
       }
     };
@@ -63,18 +63,25 @@ export default function DashboardOverview() {
           <p className="text-black/60 font-semibold mt-1">Data pemantauan mikroklimat waktu-nyata</p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-40"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-black"></span>
           </span>
-          <span className="text-sm font-medium text-amber-400">Langsung</span>
+          <span className="text-xs font-bold text-black uppercase tracking-widest">Langsung</span>
         </div>
       </div>
 
       {error && (
-        <div className="bg-rose-500/10 border border-rose-500/30 text-rose-400 p-4 rounded-lg">
-          <p className="font-bold">Gagal terhubung ke sensor!</p>
-          <p className="text-sm mt-1">{error}</p>
+        <div className="bg-black border-l-4 border-red-500 text-white p-4 rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.08)]">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-red-500/20 rounded-lg">
+              <AlertTriangle className="w-5 h-5 text-red-500" />
+            </div>
+            <div>
+              <p className="font-bold text-red-500">Koneksi Terputus!</p>
+              <p className="text-xs mt-0.5 text-zinc-400">Gagal mengambil data dari perangkat: {error}</p>
+            </div>
+          </div>
         </div>
       )}
 
@@ -87,18 +94,18 @@ export default function DashboardOverview() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         <StatCard 
-          title="Temperatur" 
+          title="Suhu Udara" 
           value={sensorData.temperature?.toFixed(2) ?? '--'} 
           unit="°C" 
           icon={Thermometer} 
-          colorClass="text-orange-400 bg-orange-400"
+          colorClass="text-black bg-yellow-400"
         />
         <StatCard 
           title="Kelembaban" 
           value={sensorData.humidity?.toFixed(2) ?? '--'} 
           unit="%" 
           icon={Droplets} 
-          colorClass="text-yellow-400 bg-yellow-400"
+          colorClass="text-black bg-yellow-400"
         />
         <StatCard 
           title="Curah Hujan" 
@@ -106,14 +113,14 @@ export default function DashboardOverview() {
           subtitle={rainData.kondisiHujan}
           unit="mm/h" 
           icon={CloudRainWind} 
-          colorClass="text-amber-500 bg-amber-500"
+          colorClass="text-black bg-yellow-400"
         />
         <StatCard 
           title="Intensitas Cahaya" 
           value={lightData.luxValue?.toFixed(0) ?? '--'} 
           unit="lux" 
           icon={Sun} 
-          colorClass="text-yellow-300 bg-yellow-300"
+          colorClass="text-black bg-yellow-400"
         />
       </div>
 

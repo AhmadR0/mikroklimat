@@ -21,8 +21,8 @@ export default function SoilCard({ sensor1Moisture, sensor2Moisture, soilConditi
     <div className="bg-zinc-950 rounded-2xl p-6 relative flex flex-col h-full shadow-[0_4px_20px_rgb(0,0,0,0.08)]">
       <div className="flex items-center justify-between mb-8">
         <h3 className="text-zinc-400 font-medium text-xs tracking-wider uppercase">Kelembaban Tanah</h3>
-        <div className="p-2 rounded-xl text-amber-400 bg-amber-400/10"> {/* Menggunakan sintaks opacity modern */}
-          <Droplets className="w-5 h-5" />
+        <div className="p-2 rounded-xl rounded-tl-sm bg-yellow-400"> {/* Menggunakan sintaks opacity modern */}
+          <Droplets className="w-5 h-5 text-black" />
         </div>
       </div>
 

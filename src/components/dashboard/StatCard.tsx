@@ -20,7 +20,7 @@ export default function StatCard({ title, value, subtitle, unit, icon: Icon, tre
       <div className="flex items-center justify-between mb-auto pb-4">
         <h3 className="text-zinc-400 font-medium text-xs tracking-wider uppercase">{title}</h3>
         {/* Memisahkan class warna untuk memastikan penerapan yang benar dan menggunakan sintaks opacity modern */}
-        <div className={`p-2 rounded-xl ${colorClass.split(' ')[1]} bg-opacity-10`}>
+        <div className={`p-2 rounded-xl rounded-tl-sm ${colorClass.split(' ')[1]}`}>
           <Icon className={`w-5 h-5 ${colorClass.split(' ')[0]}`} />
         </div>
       </div>
